@@ -90,13 +90,13 @@ def validate_password(password: str, confirm_password: str) -> Tuple[bool, str]:
     if not re.search(r'[!@#$%^&*()_\-+=\[\]{};:\'",.<>?/\\|`~]', password):
         return False, "Пароль должен содержать минимум один спецсимвол (!@#$%^&* и т.д.)"
     
-    if not re.search(r'[a-z]', password):
+    if not re.search(r'[а-яё]', password):
         return False, "Пароль должен содержать минимум одну букву в нижнем регистре (а-я)"
     
-    if not re.search(r'[A-Z]', password):
+    if not re.search(r'[А-ЯЁ]', password):
         return False, "Пароль должен содержать минимум одну букву в верхнем регистре (А-Я)"
     
-    # Проверка кириллицы (не допускать латиницу)
+    # Проверка на отсутствие латиницы (не допускать латиницу)
     if re.search(r'[a-zA-Z]', password):
         return False, "Пароль может содержать только кириллицу, не латиницу"
     
@@ -164,8 +164,8 @@ if __name__ == "__main__":
     print("Тест 1: Успешная регистрация с email")
     result, message = validate_registration(
         "user@example.com",
-        "Пароль123!",
-        "Пароль123!"
+        "Пароль123а!",
+        "Пароль123а!"
     )
     print(f"Результат: {result}, Сообщение: {message}\n")
     
@@ -173,8 +173,8 @@ if __name__ == "__main__":
     print("Тест 2: Успешная регистрация с логином (строка)")
     result, message = validate_registration(
         "john_doe",
-        "Пароль123!",
-        "Пароль123!"
+        "Пароль123а!",
+        "Пароль123а!"
     )
     print(f"Результат: {result}, Сообщение: {message}\n")
     
@@ -182,8 +182,8 @@ if __name__ == "__main__":
     print("Тест 3: Успешная регистрация с телефоном")
     result, message = validate_registration(
         "+7-123-456-7890",
-        "Пароль123!",
-        "Пароль123!"
+        "Пароль123а!",
+        "Пароль123а!"
     )
     print(f"Результат: {result}, Сообщение: {message}\n")
     
@@ -191,8 +191,8 @@ if __name__ == "__main__":
     print("Тест 4: Пароли не совпадают")
     result, message = validate_registration(
         "user@example.com",
-        "Пароль123!",
-        "Пароль456!"
+        "Пароль123а!",
+        "Пароль456б!"
     )
     print(f"Результат: {result}, Сообщение: {message}\n")
     
@@ -200,8 +200,8 @@ if __name__ == "__main__":
     print("Тест 5: Короткий логин (менее 5 символов)")
     result, message = validate_registration(
         "usr",
-        "Пароль123!",
-        "Пароль123!"
+        "Пароль123а!",
+        "Пароль123а!"
     )
     print(f"Результат: {result}, Сообщение: {message}\n")
     
@@ -209,8 +209,8 @@ if __name__ == "__main__":
     print("Тест 6: Зарезервированный логин")
     result, message = validate_registration(
         "admin",
-        "Пароль123!",
-        "Пароль123!"
+        "Пароль123а!",
+        "Пароль123а!"
     )
     print(f"Результат: {result}, Сообщение: {message}\n")
     
@@ -218,8 +218,8 @@ if __name__ == "__main__":
     print("Тест 7: Короткий пароль (менее 7 символов)")
     result, message = validate_registration(
         "user@example.com",
-        "Па123!",
-        "Па123!"
+        "Па1а!",
+        "Па1а!"
     )
     print(f"Результат: {result}, Сообщение: {message}\n")
     
@@ -236,35 +236,35 @@ if __name__ == "__main__":
     print("Тест 9: Пароль без цифр")
     result, message = validate_registration(
         "user@example.com",
-        "Пароль!!!",
-        "Пароль!!!"
+        "Пароль!!!а",
+        "Пароль!!!а"
     )
     print(f"Результат: {result}, Сообщение: {message}\n")
     
     # Тест 10: Неправильный формат email
     print("Тест 10: Неправильный формат email")
     result, message = validate_registration(
-        "user.example.com",  # Без @
-        "Пароль123!",
-        "Пароль123!"
+        "user.example.com",
+        "Пароль123а!",
+        "Пароль123а!"
     )
     print(f"Результат: {result}, Сообщение: {message}\n")
     
     # Тест 11: Неправильный формат телефона
     print("Тест 11: Неправильный формат телефона")
     result, message = validate_registration(
-        "+712345678",  # Неправильный формат
-        "Пароль123!",
-        "Пароль123!"
+        "+712345678",
+        "Пароль123а!",
+        "Пароль123а!"
     )
     print(f"Результат: {result}, Сообщение: {message}\n")
     
     # Тест 12: Логин с недопустимыми символами
     print("Тест 12: Логин с недопустимыми символами")
     result, message = validate_registration(
-        "user@name",  # @ в логине (строка)
-        "Пароль123!",
-        "Пароль123!"
+        "user@name",
+        "Пароль123а!",
+        "Пароль123а!"
     )
     print(f"Результат: {result}, Сообщение: {message}\n")
     
@@ -272,8 +272,8 @@ if __name__ == "__main__":
     print("Тест 13: Пустой логин")
     result, message = validate_registration(
         "",
-        "Пароль123!",
-        "Пароль123!"
+        "Пароль123а!",
+        "Пароль123а!"
     )
     print(f"Результат: {result}, Сообщение: {message}\n")
     
